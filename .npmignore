@@ -1,5 +1,3 @@
-*.log
-
 lib-cov
 *.seed
 *.log
@@ -12,14 +10,15 @@ lib-cov
 pids
 logs
 results
-coverage
 
-build/Release
 node_modules
 npm-debug.log
+test
+test-browser
+test-load
+util
+makefile
 
 .DS_Store
-.grunt
-.lock-wscript
 
 *.sublime*

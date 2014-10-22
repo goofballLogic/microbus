@@ -1,0 +1,28 @@
+{
+  "name": "microbus",
+  "version": "0.0.0",
+  "description": "Micro bus for javascript object-object messaging",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha ./tests/*.js -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/goofballLogic/microbus.git"
+  },
+  "keywords": [
+    "bus",
+    "messaging",
+    "js"
+  ],
+  "author": "ad stellas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/goofballLogic/microbus/issues"
+  },
+  "homepage": "https://github.com/goofballLogic/microbus",
+  "devDependencies": {
+    "mocha": "~1.21.5",
+    "chai": "~1.9.2"
+  }
+}
