@@ -18,19 +18,21 @@ General usage pattern is as follows:
 function Greeter( bus ) {
 
   var messages = bus.buildPipe();
-  messages.receive[ "app.bootstrap" ] = function() {
-
-    // do set up stuff
-    . . .
-
-  };
-  messages.receive[ "member.added" ] = function( member ) {
-
-    messages.send( member.uid, "Hello " + member.name );
-
-  };
+  messages.receive[ "app.bootstrap" ] = this.setup;
+  messages.receive[ "member.added" ] = this.addMember;
 
 }
+Greeter.prototype.setup = function() {
+
+  // do set up stuff
+  . . .
+
+};
+Greeter.prototype.addMember = function( member ) {
+
+  this.I.send( member.uid, "Hello " + member.name );
+
+};
 
 // app.js
 
@@ -77,7 +79,7 @@ Greeter.prototype.setup = function() {
   . . .
 
 };
-Greeter.prototype.addMember = function() {
+Greeter.prototype.addMember = function( member ) {
 
   this.I.send( member.uid, "Hello " + member.name );
 
