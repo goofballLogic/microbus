@@ -76,4 +76,22 @@ function Greeter() {
   
 }
 
+// app.js
+
+var bus = require( "microbus" );
+bus.pipe( new Greeter() ); 
+bus.send( "app.bootstrap" );
+
+var express = require('express');
+var app = express();
+var members = 0;
+
+app.post( "/join/{name}", function( req, res ) {
+  
+  var newMember = { uid: ++members, name: req.params.name };
+  bus.receive( newMember.uid, function( message ) { console.log( message ); } );
+  bus.send( "member.added", newMember );
+  res.send(201);
+  
+} );
 ````
