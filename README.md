@@ -15,10 +15,9 @@ General usage pattern is as follows:
 
 // greeter.js
 
-var bus = require( "microbus" );
-function Greeter() {
+function Greeter( bus ) {
 
-  var messages = bus.buildInterface();
+  var messages = bus.buildPipe();
   messages.receive[ "app.bootstrap" ] = function() {
   
     // do set up stuff
@@ -35,8 +34,10 @@ function Greeter() {
 
 // app.js
 
-var bus = require( "microbus" );
-var greeter = new Greeter();
+var Microbus = require( "microbus" );
+
+var bus = new Microbus.Hub();
+var greeter = new Greeter( bus );
 bus.send( "app.bootstrap" );
 
 var express = require('express');
@@ -78,7 +79,8 @@ function Greeter() {
 
 // app.js
 
-var bus = require( "microbus" );
+var Microbus = require( "microbus" );
+var bus = new Microbus.Hub();
 bus.pipe( new Greeter() ); 
 bus.send( "app.bootstrap" );
 
