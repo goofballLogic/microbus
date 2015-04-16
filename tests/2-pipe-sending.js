@@ -27,7 +27,7 @@ function WhenHelloMessageSentThroughSend() {
 
 		beforeEach( function() {
 
-			this.obj.I.send( "world", "hello" );
+			this.obj.I.send( "hello", "world" );
 
 		} );
 		Thens.call( this );
@@ -59,7 +59,7 @@ function GivenAnAttachedPipe( whens ) {
 		beforeEach( function() {
 
 			var pipeOutput = [];
-			function messageListener( message, subject ) {
+			function messageListener( subject, message ) {
 
 				pipeOutput.push( { "subject" : subject, "message" : message } );
 
@@ -86,7 +86,7 @@ describe( "Given an object with an I object member", function() {
 
 		beforeEach( function() {
 
-			this.obj.I.send = function( message, subject ) {
+			this.obj.I.send = function( subject ) {
 
 				this.sent = this.sent || [];
 				this.sent.push( subject );

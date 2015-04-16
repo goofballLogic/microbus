@@ -10,7 +10,7 @@ function WhenThen() {
 		beforeEach( function() {
 
 			this.pipe = bus.pipe( this.obj );
-			this.pipe( 42, "value-specified" );
+			this.pipe( "value-specified", 42 );
 
 		} );
 
@@ -63,7 +63,7 @@ describe( "Given an object with some behaviour", function() {
 
 			this.obj.I = {
 
-				receive: function( message, subject ) {
+				receive: function( subject, message ) {
 
 					if( subject === "value-specified" ) { this.somebehaviour( message ); }
 

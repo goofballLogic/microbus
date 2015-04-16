@@ -19,17 +19,17 @@ function Greeter( bus ) {
 
   var messages = bus.buildPipe();
   messages.receive[ "app.bootstrap" ] = function() {
-  
+
     // do set up stuff
     . . .
-    
+
   };
   messages.receive[ "member.added" ] = function( member ) {
-  
+
     messages.send( member.uid, "Hello " + member.name );
-    
+
   };
-  
+
 }
 
 // app.js
@@ -45,12 +45,12 @@ var app = express();
 var members = 0;
 
 app.post( "/join/{name}", function( req, res ) {
-  
+
   var newMember = { uid: ++members, name: req.params.name };
-  bus.receive( newMember.uid, function( message ) { console.log( message ); } );
+  bus.receive[ newMember.uid ] = function( message ) { console.log( message ); };
   bus.send( "member.added", newMember );
   res.send(201);
-  
+
 } );
 ````
 
@@ -64,24 +64,24 @@ function Greeter() {
 
   var messages = this.I = { send: function() { }, receive: { } };
   messages.receive[ "app.bootstrap" ] = function() {
-  
+
     // do set up stuff
     . . .
-    
+
   };
   messages.receive[ "member.added" ] = function( member ) {
-  
+
     messages.send( member.uid, "Hello " + member.name );
-    
+
   };
-  
+
 }
 
 // app.js
 
 var Microbus = require( "microbus" );
 var bus = new Microbus.Hub();
-bus.pipe( new Greeter() ); 
+bus.pipe( new Greeter() );
 bus.send( "app.bootstrap" );
 
 var express = require('express');
@@ -89,11 +89,11 @@ var app = express();
 var members = 0;
 
 app.post( "/join/{name}", function( req, res ) {
-  
+
   var newMember = { uid: ++members, name: req.params.name };
-  bus.receive( newMember.uid, function( message ) { console.log( message ); } );
+  bus.receive[ newMember.uid ] = function( message ) { console.log( message ); };
   bus.send( "member.added", newMember );
   res.send(201);
-  
+
 } );
 ````
