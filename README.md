@@ -62,16 +62,24 @@ app.post( "/join/{name}", function( req, res ) {
 
 function Greeter() {
 
-  var messages = this.I = { send: function() { }, receive: { } };
-  messages.receive[ "app.bootstrap" ] = function() {
+  this.I = {
 
-    // do set up stuff
-    . . .
+    send: function() { },
+    receive: {
 
-  };
-  messages.receive[ "member.added" ] = function( member ) {
+      "app.bootstrap": function setup() {
 
-    messages.send( member.uid, "Hello " + member.name );
+        // do set up stuff
+        . . .
+
+      },
+      "member.added": function addMember( member ) {
+
+        messages.send( member.uid, "Hello " + member.name );
+
+      }
+
+    }
 
   };
 
