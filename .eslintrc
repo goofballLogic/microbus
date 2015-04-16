@@ -1,0 +1,10 @@
+{
+	"rules" : {
+		"key-spacing": 0
+	},
+	"globals" : {
+		"describe" : true,
+		"beforeEach" : true,
+		"it" : true
+	}
+}
