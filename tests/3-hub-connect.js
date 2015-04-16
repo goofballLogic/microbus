@@ -1,5 +1,30 @@
-var should = require( "chai" ).should();
-var bus  = require( "../lib" );
+/*eslint-env node*/
+"use strict";
+var should = require( "chai" ).should(); //eslint-disable-line
+var bus = require( "../lib" );
+
+
+function Agent() {
+
+	this.I = {
+
+		send: function() { },
+		receive: function( message, subject ) {
+
+			this.inbox.push( [ message, subject ] );
+
+		}
+
+	};
+	this.inbox = [ ];
+
+}
+Agent.prototype.sayHelloWorld = function() {
+
+	this.I.send( "world", "hello" );
+
+};
+
 
 describe( "Given a hub", function() {
 
@@ -29,7 +54,7 @@ describe( "Given a hub", function() {
 
 					this.obj1.sayHelloWorld();
 
-				 } );
+				} );
 
 				it( "Then the message should be received by object2", function() {
 
@@ -45,24 +70,3 @@ describe( "Given a hub", function() {
 	} );
 
 } );
-
-function Agent() {
-
-	this.I = {
-
-		send: function() { },
-		receive: function( message, subject ) {
-
-			this.inbox.push( [ message, subject ] );
-
-		}
-
-	};
-	this.inbox = [ ];
-
-}
-Agent.prototype.sayHelloWorld = function() {
-
-	this.I.send( "world", "hello" );
-
-}

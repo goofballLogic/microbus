@@ -1,5 +1,29 @@
+/*eslint-env node */
+"use strict";
 var should = require( "chai" ).should();
-var bus  = require( "../lib" );
+var bus = require( "../lib" );
+
+function WhenThen() {
+
+	describe( "When this object is attached to a pipe and a value-specified message is given to the pipe", function() {
+
+		beforeEach( function() {
+
+			this.pipe = bus.pipe( this.obj );
+			this.pipe( 42, "value-specified" );
+
+		} );
+
+		it( "Then object should have invoked its behaviour", function() {
+
+			should.exist( this.obj.z );
+			this.obj.z.should.equal( 43 );
+
+		} );
+
+	} );
+
+}
 
 describe( "Given an object with some behaviour", function() {
 
@@ -41,7 +65,7 @@ describe( "Given an object with some behaviour", function() {
 
 				receive: function( message, subject ) {
 
-					if( subject == "value-specified" ) this.somebehaviour( message );
+					if( subject === "value-specified" ) { this.somebehaviour( message ); }
 
 				}
 
@@ -92,26 +116,5 @@ describe( "Given an object with some behaviour", function() {
 
 	} );
 
-	function WhenThen() {
-
-		describe( "When this object is attached to a pipe and a value-specified message is given to the pipe", function() {
-
-			beforeEach( function() {
-
-				this.pipe = bus.pipe( this.obj );
-				this.pipe( 42, "value-specified" );
-
-			} );
-
-			it( "Then object should have invoked its behaviour", function() {
-
-				should.exist( this.obj.z );
-				this.obj.z.should.equal( 43 );
-
-			} );
-
-		} );
-
-	}
 
 } );
