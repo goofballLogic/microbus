@@ -63,27 +63,25 @@ app.post( "/join/{name}", function( req, res ) {
 function Greeter() {
 
   this.I = {
-
     send: function() { },
     receive: {
-
-      "app.bootstrap": function setup() {
-
-        // do set up stuff
-        . . .
-
-      },
-      "member.added": function addMember( member ) {
-
-        messages.send( member.uid, "Hello " + member.name );
-
-      }
-
+      "app.bootstrap": this.setup,
+      "member.added": this.addMember
     }
-
   };
 
 }
+Greeter.prototype.setup = function() {
+
+  // do set up stuff
+  . . .
+
+};
+Greeter.prototype.addMember = function() {
+
+  this.I.send( member.uid, "Hello " + member.name );
+
+};
 
 // app.js
 
