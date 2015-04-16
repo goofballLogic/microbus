@@ -17,9 +17,9 @@ General usage pattern is as follows:
 
 function Greeter( bus ) {
 
-  this.I = var messages = bus.buildPipe();
-  messages.receive[ "app.bootstrap" ] = this.setup;
-  messages.receive[ "member.added" ] = this.addMember;
+  this.I = bus.buildPipe();
+  this.I.receive[ "app.bootstrap" ] = this.setup;
+  this.I.receive[ "member.added" ] = this.addMember;
 
 }
 Greeter.prototype.setup = function() {
