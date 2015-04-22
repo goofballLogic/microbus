@@ -64,10 +64,17 @@ app.post( "/join/{name}", function( req, res ) {
 
 function Greeter() {
 
-  this.I = { send: function() { }, receive: {} };
-  this.I.receive[ "app.bootstrap" ] = this.setup;
-  this.I.receive[ "member.added" ] = this.addMember;
-
+  this.I = { 
+  
+    receive: {
+      
+      "app.bootstrap": this.setup,
+      "member.added": this.addMember
+  
+    }
+  
+  };
+  
 }
 Greeter.prototype.setup = function() {
 
