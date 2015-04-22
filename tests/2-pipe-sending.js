@@ -14,8 +14,12 @@ function Thens() {
 
 	it( "And the local sending function should also have processed the message", function() {
 
-		this.obj.sent.should.have.length( 1 );
-		this.obj.sent[ 0 ].should.eql( "hello" );
+		if(this.obj.sent) {
+
+			this.obj.sent.should.have.length( 1 );
+			this.obj.sent[ 0 ].should.eql( "hello" );
+
+		}
 
 	} );
 
@@ -81,6 +85,12 @@ describe( "Given an object with an I object member", function() {
 		this.obj = { I : { } };
 
 	} );
+
+	GivenAnAttachedPipe.bind( this )(
+
+		WhenHelloMessageSentThroughSend
+
+	);
 
 	describe( "And a send function member on the I", function() {
 
