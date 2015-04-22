@@ -6,8 +6,8 @@ Micro bus for js
 General usage pattern is as follows:
 
 1. Each object wishing to exchange messages on the bus should build an interface through which to send and receive, or expose one called "I"
-2. This interface object should contain a `send` function, and a `receive` hash
-3. Each item in the `receive` hash is a function handling messages of a given name
+2. This interface object should contain a `receive` hash where each item in the `receive` hash is a function handling messages of a given name
+3. Optionally, a `send` function can also be attached which is wrapped by the bus when you attach. If one isn't specified the bus will manufacture an empty function for you.
 
 ### Example - building the interface
 
