@@ -1,15 +1,11 @@
 /*eslint-env node */
 "use strict";
 
-function agentid() {
-
-	return "Agent_" + Math.random().toString().substr(2) + Math.random().toString().substr(2);
-
-}
+var mb = require( "../lib" );
 
 function initialise() {
 
-	this.uid = agentid();
+	this.uid = "Agent_" + mb.uid();
 	this.handleMyMessages = function() {
 
 		this.log.push( Array.prototype.slice.call( arguments, 0 ) );
