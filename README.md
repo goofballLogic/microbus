@@ -101,3 +101,50 @@ app.post( "/join/{name}", function( req, res ) {
 
 } );
 ````
+
+
+### Example - annotating the functions
+
+````javascript
+
+// greeter.js
+
+function Greeter() {
+
+  this.I = {};
+
+}
+Greeter.prototype.setup = function() {
+
+  // do set up stuff
+  . . .
+
+};
+Greeter.prototype.setup.messages = [ "app.boostrap" ];
+Greeter.prototype.addMember = function( member ) {
+
+  this.I.send( member.uid, "Hello " + member.name );
+
+};
+Greeter.prototype.addMember.messages = [ "member.added" ];
+
+// app.js
+
+var Microbus = require( "microbus" );
+var bus = new Microbus.Hub();
+bus.pipe( new Greeter() );
+bus.send( "app.bootstrap" );
+
+var express = require('express');
+var app = express();
+var members = 0;
+
+app.post( "/join/{name}", function( req, res ) {
+
+  var newMember = { uid: ++members, name: req.params.name };
+  bus.receive[ newMember.uid ] = function( message ) { console.log( message ); };
+  bus.send( "member.added", newMember );
+  res.send(201);
+
+} );
+````
