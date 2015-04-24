@@ -19,7 +19,7 @@ describe( "Given that I explicitly build a pipe", function() {
 
 		var bus = new Microbus.Hub();
 		this.listener = new HelloListener( bus );
-		this.sendingPipe = bus.buildAdapter( bus );
+		this.sendingPipe = bus.buildAdapter( null );
 
 	} );
 
