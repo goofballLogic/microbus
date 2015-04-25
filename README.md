@@ -27,7 +27,7 @@ Greeter.prototype.setup = function() {
 Greeter.prototype.setup.receive = [ "app.bootstrap" ];
 Greeter.prototype.addMember = function( member ) {
 
-  this.bus.send( member.uid, "Hello " + member.name );
+  this.send( member.uid, "Hello " + member.name );
 
 };
 Greeter.prototype.addMember.receive = [ "member.added" ];
