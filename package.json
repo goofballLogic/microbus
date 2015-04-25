@@ -1,6 +1,6 @@
 {
   "name": "microbus",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Micro bus for javascript object-object messaging",
   "main": "lib/index.js",
   "scripts": {
