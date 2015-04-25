@@ -40,7 +40,7 @@ describe( "Given a bus and two connected objects which receive the send function
 
 		it( "Then object1's 'send' business logic should have executed", function() {
 
-			this.agent1.mySendExecuted.should.be.true;
+			this.agent1.mySendExecuted.should.equal(true);
 
 		} );
 
