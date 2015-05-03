@@ -36,7 +36,7 @@ Greeter.prototype.addMember.receive = [ "member.added" ];
 
 var Microbus = require( "microbus" );
 
-var bus = new Microbus.Hub();
+var bus = new Microbus.Bus();
 bus.connect( new Greeter() );
 bus.send( "app.bootstrap" );
 
