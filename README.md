@@ -15,40 +15,49 @@ General usage pattern is as follows:
 
 // greeter.js
 
-function Greeter() {
-
-}
-Greeter.prototype.setup = function() {
-
-  // do set up stuff
-  . . .
-
-};
-Greeter.prototype.setup.receive = [ "app.bootstrap" ];
-Greeter.prototype.addMember = function( member ) {
+function Greeter() { }
+Greeter.prototype.handleMemberAdded = function( member ) {
 
   this.send( member.uid, "Hello " + member.name );
 
 };
-Greeter.prototype.addMember.receive = [ "member.added" ];
+Greeter.prototype.handleMemberAdded.receive = [ "member.added" ];
+
+
+// domain.js
+
+function Domain() {
+
+  var bus = new microbus.Bus();
+  bus.connect( new Greeter() );
+  bus.connect( this );
+  
+}
+Domain.prototype.createMember( name ) {
+
+  var newMember = { uid: ++members, name: name };
+  this.logger.receive.push( newMember.uid );
+  this.send( "member.added", newMember );
+  
+};
+Domain.prototype.logger = function( subject, message ) {
+
+  console.log( message );
+  
+};
+Domain.prototype.logger.receive = [];
 
 // app.js
 
-var Microbus = require( "microbus" );
-
-var bus = new Microbus.Bus();
-bus.connect( new Greeter() );
-bus.send( "app.bootstrap" );
-
+var Domain = require( "./domain" );
+var domain = new Domain();
 var express = require('express');
 var app = express();
 var members = 0;
 
 app.post( "/join/{name}", function( req, res ) {
 
-  var newMember = { uid: ++members, name: req.params.name };
-  bus.receive[ newMember.uid ] = function( message ) { console.log( message ); };
-  bus.send( "member.added", newMember );
+  domain.createMember( req.params.name );
   res.send(201);
 
 } );
