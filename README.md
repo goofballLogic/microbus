@@ -16,7 +16,7 @@ General usage pattern is as follows:
 // search-widget.js
 
 function SearchWidget() { }
-SearchWidget.prototype.executeSearch( searchText ) {
+SearchWidget.prototype.executeSearch( subject, searchText ) {
 
   xhr.get( "/search?q=" + searchText, function( err, xhrObject ) {
     
@@ -33,6 +33,7 @@ SearchWidget.prototype.executeSearch( searchText ) {
   } );
   
 };
+SearchWidget.prototype.executeSearch.receive = [ "requested:search" ];
 
 
 // results-widget.js
