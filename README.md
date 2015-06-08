@@ -63,6 +63,7 @@ Domain.prototype.search( searchText ) {
   
 };
 
+
 // app.js
 
 var Domain = require( "./domain" );
