@@ -13,15 +13,37 @@ General usage pattern is as follows:
 
 ````javascript
 
-// greeter.js
+// search-widget.js
 
-function Greeter() { }
-Greeter.prototype.handleMemberAdded = function( member ) {
+function SearchWidget() { }
+SearchWidget.prototype.executeSearch( searchText ) {
 
-  this.send( member.uid, "Hello " + member.name );
-
+  xhr.get( "/search?q=" + searchText, function( err, xhrObject ) {
+    
+    if( !err ) {
+    
+      this.send( "search-widget:results", xhrObject.responseText );
+      
+    } else { 
+    
+      handleError( err, xhrObject );
+      
+    }
+  
+  } );
+  
 };
-Greeter.prototype.handleMemberAdded.receive = [ "member.added" ];
+
+
+// results-widget.js
+
+function ResultsWidget() { }
+ResultsWidget.prototype.displayResults( subject, data ) {
+
+  console.log( "Search results: " + data ); // TODO: populate results grid
+  
+}
+ResultsWidget.prototype.displayResults.receive = [ "search-widget:results" ];
 
 
 // domain.js
@@ -29,36 +51,20 @@ Greeter.prototype.handleMemberAdded.receive = [ "member.added" ];
 function Domain() {
 
   var bus = new microbus.Bus();
-  bus.connect( new Greeter() );
+  bus.connect( new SearchWidget() );
+  bus.connect( new ResultsWidget() );
   bus.connect( this );
   
 }
-Domain.prototype.createMember( name ) {
+Domain.prototype.search( searchText ) {
 
-  var newMember = { uid: ++members, name: name };
-  this.logger.receive.push( newMember.uid );
-  this.send( "member.added", newMember );
+  this.send( "requested:search", searchText );
   
 };
-Domain.prototype.logger = function( subject, message ) {
-
-  console.log( message );
-  
-};
-Domain.prototype.logger.receive = [];
 
 // app.js
 
 var Domain = require( "./domain" );
 var domain = new Domain();
-var express = require('express');
-var app = express();
-var members = 0;
-
-app.post( "/join/{name}", function( req, res ) {
-
-  domain.createMember( req.params.name );
-  res.send(201);
-
-} );
+domain.search( "how to draw a bunny" );
 ````
