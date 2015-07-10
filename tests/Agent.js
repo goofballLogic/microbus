@@ -38,6 +38,11 @@ Agent.prototype.announceSelf = function() {
 	this.send( "agent.added", { uid: this.uid } );
 
 };
+Agent.prototype.publishNews = function( toPublish ) {
+
+	this.send( "news.published", toPublish );
+
+};
 
 
 module.exports = Agent;
